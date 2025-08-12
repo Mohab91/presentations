@@ -2,14 +2,14 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-// ✅ التكوين الصحيح من مشروع: presentation-platform-ppo
+// ✅ التكوين من متغيرات البيئة
 const firebaseConfig = {
-  apiKey: "AIzaSyB7GlKBOCrSq64wYCUWY3W-BDcLESiEpbA",
-  authDomain: "presentation-platform-ppo.firebaseapp.com",
-  projectId: "presentation-platform-ppo",
-  storageBucket: "presentation-platform-ppo.appspot.com",
-  messagingSenderId: "71499932139",
-  appId: "1:71499932139:web:ed33657e891ee7e01ff9ae"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // ✅ تهيئة Firebase
