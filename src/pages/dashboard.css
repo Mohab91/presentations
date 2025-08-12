@@ -1,0 +1,23 @@
+.dashboard-card {
+  @apply w-80 p-6 rounded-2xl bg-white/20 backdrop-blur-lg border border-white/30 shadow-xl text-right transition-all duration-300 transform hover:scale-105;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dashboard-card .icon {
+  @apply text-4xl text-blue-700 transition-transform duration-300 group-hover:scale-110;
+}
+
+.dashboard-card h3 {
+  @apply text-lg font-bold text-gray-800 mb-1;
+}
+
+.dashboard-card p {
+  @apply text-sm text-gray-600;
+}
+
+.btn-primary {
+  @apply px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:from-purple-700 hover:to-blue-700 transition;
+}
