@@ -5,6 +5,9 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 
+const DASHBOARD_URL =
+  "https://presentations-o2ow6nibk-mo-hassans-projects.vercel.app/dashboard";
+
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,17 +28,33 @@ export default function Signup() {
       // حراسة إضافية: لو حد حاول يغيّر القيمة يدويًا
       const safeRole = allowedRoles.includes(role) ? role : "viewer";
 
-      const cred = await createUserWithEmailAndPassword(auth, email.trim(), password);
+      const cred = await createUserWithEmailAndPassword(
+        auth,
+        email.trim(),
+        password
+      );
+
       await setDoc(doc(db, "users", cred.user.uid), {
         email: email.trim(),
         role: safeRole,
         createdAt: serverTimestamp(),
       });
 
-      navigate("/dashboard");
+      // ✅ إعادة التوجيه بعد نجاح التسجيل
+      // إن كنت داخل نفس الدومين استخدم navigate، وإلا حوّل لرابط Vercel الكامل
+      const sameOrigin =
+        typeof window !== "undefined" &&
+        window.location.origin.includes("presentations-o2ow6nibk-mo-hassans-projects.vercel.app");
+
+      if (sameOrigin) {
+        navigate("/dashboard");
+      } else {
+        // استخدم replace لمنع الرجوع لصفحة التسجيل بزر الرجوع
+        window.location.replace(DASHBOARD_URL);
+      }
     } catch (e) {
       console.error(e);
-      setErr(e.message || "حدث خطأ أثناء إنشاء الحساب");
+      setErr(e?.message || "حدث خطأ أثناء إنشاء الحساب");
     } finally {
       setLoading(false);
     }
